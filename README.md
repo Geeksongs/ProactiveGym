@@ -166,9 +166,9 @@ ProactiveGym/
 If you use this in your research, please cite:
 
 ```bibtex
-@misc{proactivegym2024,
+@misc{proactivegym2026,
   title={ProactiveGym: A Gymnasium Environment for Training Proactive Agents},
-  year={2024},
+  year={2026},
 }
 ```
 
