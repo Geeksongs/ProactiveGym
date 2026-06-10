@@ -9,9 +9,9 @@ ProactiveGym enables training LLM agents to:
 2. **Decide** when to proactively intervene
 3. **Learn** from accept/reject feedback via reinforcement learning
 
-This gym is designed for research on proactive AI assistants, combining ideas from:
-- [ProactiveAgent](https://github.com/thunlp/ProactiveAgent) (ICLR 2025) - Environment simulation and reward model
-- [UserRL](https://github.com/SalesforceAIResearch/UserRL) - Multi-turn RL training framework
+Inspired by:
+- [ProactiveAgent](https://github.com/thunlp/ProactiveAgent) (ICLR 2025)
+- [UserRL](https://github.com/SalesforceAIResearch/UserRL)
 
 ## Installation
 
