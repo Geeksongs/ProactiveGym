@@ -138,6 +138,13 @@ ProactiveGym/
 │       ├── simulated_user.py  # User simulation + Reward Model
 │       ├── env_simulator.py   # Event generation
 │       └── prompts.py         # LLM prompts
+├── sandbox/                   # OpenSandbox integration
+│   ├── __init__.py
+│   ├── config.py              # Sandbox configuration
+│   ├── desktop_sandbox.py     # Desktop environment wrapper
+│   ├── demo.py                # Demo scripts
+│   ├── Dockerfile             # Custom desktop image
+│   └── README.md              # Sandbox documentation
 ├── test_human.py              # Interactive testing
 └── setup.py
 ```
