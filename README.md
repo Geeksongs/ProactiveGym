@@ -163,7 +163,7 @@ ProactiveGym/
 
 ## Citation
 
-If you use this in your research, please cite:
+If you use this in your research, please cite our work, We would really appreciate it！
 
 ```bibtex
 @misc{proactivegym2026,
