@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="image.png" width="300" alt="ProactiveGym Logo">
+</p>
+
 # ProactiveGym
 
 A Gymnasium environment for training proactive agents that anticipate user needs and offer timely assistance.
