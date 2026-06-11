@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="image.png" width="300" alt="ProactiveGym Logo">
+  <img src="image.png" width="200" alt="ProactiveGym Logo">
 </p>
 
 # ProactiveGym
