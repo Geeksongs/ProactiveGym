@@ -20,6 +20,11 @@ Inspired by:
 ## Installation
 
 ```bash
+# Create conda environment
+conda create -n proactivegym python=3.10
+conda activate proactivegym
+
+# Install package
 cd ProactiveGym
 pip install -e .
 ```
