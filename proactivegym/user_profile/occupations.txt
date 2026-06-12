@@ -1,0 +1,104 @@
+Software Engineer
+Data Scientist
+University Student
+High School Student
+Graduate Student
+Bank Manager
+Investment Banker
+Accountant
+Financial Analyst
+Doctor
+Nurse
+Surgeon
+Dentist
+Pharmacist
+Lawyer
+Judge
+Paralegal
+Teacher
+Professor
+Principal
+Research Scientist
+Lab Technician
+Mechanical Engineer
+Civil Engineer
+Electrical Engineer
+Architect
+Construction Worker
+Plumber
+Electrician
+Carpenter
+Factory Worker
+Assembly Line Worker
+Warehouse Worker
+Truck Driver
+Taxi Driver
+Bus Driver
+Pilot
+Flight Attendant
+Ship Captain
+Train Conductor
+Chef
+Restaurant Manager
+Waiter
+Bartender
+Baker
+Butcher
+Farmer
+Agricultural Worker
+Fisherman
+Veterinarian
+Police Officer
+Firefighter
+Paramedic
+Military Officer
+Security Guard
+Journalist
+News Anchor
+Editor
+Writer
+Photographer
+Graphic Designer
+UI/UX Designer
+Video Editor
+Film Director
+Actor
+Musician
+Music Producer
+Artist
+Sculptor
+Fashion Designer
+Model
+Makeup Artist
+Hairdresser
+Real Estate Agent
+Insurance Agent
+Sales Representative
+Marketing Manager
+HR Manager
+Project Manager
+CEO
+Entrepreneur
+Small Business Owner
+Freelancer
+Consultant
+Social Worker
+Psychologist
+Therapist
+Physical Therapist
+Personal Trainer
+Yoga Instructor
+Tour Guide
+Hotel Manager
+Receptionist
+Administrative Assistant
+Librarian
+Curator
+Translator
+Interpreter
+Delivery Driver
+Courier
+Cleaner
+Housekeeper
+Retired
+Unemployed
