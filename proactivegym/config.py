@@ -16,14 +16,14 @@ class ProactiveGymConfig:
 
     # Model configuration (for simulated user / reward model)
     api_key: str = ""
-    model_name: str = "gpt-4o-mini"
+    model_name: str = "gpt-5.4-nano-2026-03-17"
     base_url: str = ""
     temperature: float = 0.7
-    max_tokens: int = 2048
+    max_completion_tokens: int = 16384
     timeout: int = 30
 
     # Reward Model configuration
-    reward_model_name: str = "gpt-4o"  # More capable model for judgment
+    reward_model_name: str = "gpt-5.4-nano-2026-03-17"  # More capable model for judgment
     reward_model_temperature: float = 0.0  # Deterministic judgment
 
     # Environment configuration
@@ -74,7 +74,7 @@ class ProactiveGymConfig:
             "model_name": self.model_name,
             "base_url": self.base_url,
             "temperature": self.temperature,
-            "max_tokens": self.max_tokens,
+            "max_completion_tokens": self.max_completion_tokens,
             "timeout": self.timeout,
         }
 
@@ -85,7 +85,7 @@ class ProactiveGymConfig:
             "model_name": self.reward_model_name,
             "base_url": self.base_url,
             "temperature": self.reward_model_temperature,
-            "max_tokens": self.max_tokens,
+            "max_completion_tokens": self.max_completion_tokens,
             "timeout": self.timeout,
         }
 

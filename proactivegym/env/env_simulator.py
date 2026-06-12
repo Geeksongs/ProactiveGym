@@ -103,7 +103,7 @@ class EnvironmentSimulator:
                 model=self.model_config["model_name"],
                 messages=messages,
                 temperature=0.8,
-                max_tokens=2048,
+                max_completion_tokens=16384,
                 timeout=self.model_config.get("timeout", 60)
             )
 
@@ -129,7 +129,7 @@ class EnvironmentSimulator:
                 model=self.model_config["model_name"],
                 messages=messages,
                 temperature=0.8,
-                max_tokens=2048,
+                max_completion_tokens=16384,
                 timeout=self.model_config.get("timeout", 60)
             )
 
@@ -170,7 +170,7 @@ class EnvironmentSimulator:
                 model=self.model_config["model_name"],
                 messages=messages,
                 temperature=0.7,
-                max_tokens=1024,
+                max_completion_tokens=16384,
                 timeout=self.model_config.get("timeout", 30)
             )
 
@@ -206,7 +206,7 @@ class EnvironmentSimulator:
                 model=self.model_config["model_name"],
                 messages=messages,
                 temperature=0.7,
-                max_tokens=1024,
+                max_completion_tokens=16384,
                 timeout=self.model_config.get("timeout", 30)
             )
 
@@ -327,6 +327,7 @@ class EnvironmentSimulator:
                 ]
             }
         }
+
 
         scenario_data = fallback_scenarios.get(theme, fallback_scenarios["daily_life"])
         return self.load_scenario(scenario_data)

@@ -102,7 +102,7 @@ class SimulatedUser:
                 model=self.model_config["model_name"],
                 messages=messages,
                 temperature=self.model_config.get("temperature", 0.7),
-                max_tokens=self.model_config.get("max_tokens", 1024),
+                max_completion_tokens=self.model_config.get("max_completion_tokens", 16384),
                 timeout=self.model_config.get("timeout", 30)
             )
 
@@ -140,7 +140,7 @@ class SimulatedUser:
                 model=self.model_config["model_name"],
                 messages=messages,
                 temperature=self.model_config.get("temperature", 0.7),
-                max_tokens=self.model_config.get("max_tokens", 1024),
+                max_completion_tokens=self.model_config.get("max_completion_tokens", 16384),
                 timeout=self.model_config.get("timeout", 30)
             )
 
@@ -192,7 +192,7 @@ class SimulatedUser:
                 model=self.reward_model_config["model_name"],
                 messages=messages,
                 temperature=self.reward_model_config.get("temperature", 0.0),
-                max_tokens=self.reward_model_config.get("max_tokens", 1024),
+                max_completion_tokens=self.reward_model_config.get("max_completion_tokens", 16384),
                 timeout=self.reward_model_config.get("timeout", 30)
             )
 
@@ -228,7 +228,7 @@ class SimulatedUser:
                 model=self.reward_model_config["model_name"],
                 messages=messages,
                 temperature=self.reward_model_config.get("temperature", 0.0),
-                max_tokens=self.reward_model_config.get("max_tokens", 1024),
+                max_completion_tokens=self.reward_model_config.get("max_completion_tokens", 16384),
                 timeout=self.reward_model_config.get("timeout", 30)
             )
 
@@ -264,7 +264,7 @@ class SimulatedUser:
                 model=self.reward_model_config["model_name"],
                 messages=messages,
                 temperature=0.0,
-                max_tokens=512,
+                max_completion_tokens=16384,
                 timeout=self.reward_model_config.get("timeout", 30)
             )
 
@@ -289,7 +289,7 @@ class SimulatedUser:
                 model=self.reward_model_config["model_name"],
                 messages=messages,
                 temperature=0.0,
-                max_tokens=512,
+                max_completion_tokens=16384,
                 timeout=self.reward_model_config.get("timeout", 30)
             )
 
