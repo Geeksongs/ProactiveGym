@@ -62,6 +62,7 @@ class UserProfile:
     occupation: str
     personality: str
     education_level: str
+    gender: str
     background_description: str
 
 
@@ -129,6 +130,7 @@ class UserProfileGenerator:
         country = random.choice(self.countries)
         occupation = random.choice(self.occupations)
         personality = random.choice(self.personalities)
+        gender = random.choice(["male", "female"])
 
         # Education level based on age
         if 15 <= age <= 18:
@@ -142,7 +144,7 @@ class UserProfileGenerator:
                 occupation = "High School Student"
 
         background_description = self._generate_description(
-            age, country, occupation, personality, education_level
+            age, country, occupation, personality, education_level, gender
         )
 
         return UserProfile(
@@ -151,6 +153,7 @@ class UserProfileGenerator:
             occupation=occupation,
             personality=personality,
             education_level=education_level,
+            gender=gender,
             background_description=background_description
         )
 
@@ -160,13 +163,14 @@ class UserProfileGenerator:
         country: str,
         occupation: str,
         personality: str,
-        education_level: str
+        education_level: str,
+        gender: str
     ) -> str:
         """Generate a natural language background description using LLM."""
         if self.use_llm:
-            return self._generate_description_llm(age, country, occupation, personality, education_level)
+            return self._generate_description_llm(age, country, occupation, personality, education_level, gender)
         else:
-            return self._generate_description_template(age, country, occupation, personality, education_level)
+            return self._generate_description_template(age, country, occupation, personality, education_level, gender)
 
     def _generate_description_llm(
         self,
@@ -174,14 +178,18 @@ class UserProfileGenerator:
         country: str,
         occupation: str,
         personality: str,
-        education_level: str
+        education_level: str,
+        gender: str
     ) -> str:
         """Generate detailed description using LLM."""
         personality_desc = MBTI_DESCRIPTIONS.get(personality, "unique")
+        pronoun = "he" if gender == "male" else "she"
+        pronoun_pos = "his" if gender == "male" else "her"
 
         prompt = f"""Based on the following user profile, generate a detailed and vivid background description in 3-4 sentences. Make it feel like a real person with a unique story.
 
 User Profile:
+- Gender: {gender}
 - Age: {age}
 - Country: {country}
 - Occupation: {occupation}
@@ -194,7 +202,8 @@ Requirements:
 3. Include plausible past experiences or background story that shaped who they are
 4. Mention their current life situation, habits, or daily routine
 5. Keep it concise but vivid (3-4 sentences)
-6. Write in third person ("This user..." or "They...")
+6. Write in third person, use "{pronoun}/{pronoun_pos}" as pronouns (NOT "they/their")
+7. Start with "This user is a {age}-year-old {gender}..."
 
 Generate the description:"""
 
@@ -209,7 +218,7 @@ Generate the description:"""
             return response.choices[0].message.content.strip()
         except Exception as e:
             print(f"[UserProfileGenerator] LLM error: {e}, falling back to template")
-            return self._generate_description_template(age, country, occupation, personality, education_level)
+            return self._generate_description_template(age, country, occupation, personality, education_level, gender)
 
     def _generate_description_template(
         self,
@@ -217,22 +226,26 @@ Generate the description:"""
         country: str,
         occupation: str,
         personality: str,
-        education_level: str
+        education_level: str,
+        gender: str
     ) -> str:
         """Generate description using template (fallback)."""
+        pronoun = "He" if gender == "male" else "She"
+        pronoun_pos = "his" if gender == "male" else "her"
+
         # Age group description
         if age < 18:
-            age_desc = f"a {age}-year-old teenager"
+            age_desc = f"a {age}-year-old {gender} teenager"
         elif age < 25:
-            age_desc = f"a {age}-year-old young adult"
+            age_desc = f"a {age}-year-old {gender} young adult"
         elif age < 35:
-            age_desc = f"a {age}-year-old adult in their early career"
+            age_desc = f"a {age}-year-old {gender} in early career"
         elif age < 50:
-            age_desc = f"a {age}-year-old experienced professional"
+            age_desc = f"a {age}-year-old {gender} experienced professional"
         elif age < 65:
-            age_desc = f"a {age}-year-old senior professional"
+            age_desc = f"a {age}-year-old {gender} senior professional"
         else:
-            age_desc = f"a {age}-year-old"
+            age_desc = f"a {age}-year-old {gender}"
 
         # Personality description
         personality_desc = MBTI_DESCRIPTIONS.get(personality, "unique")
@@ -251,8 +264,7 @@ Generate the description:"""
 
         desc = (
             f"This user is {age_desc} from {country}, {occupation_part}. "
-            f"They have a {education_level} education and their personality type is {personality} "
-            f"({personality_desc})."
+            f"{pronoun} has a {education_level} education and {pronoun_pos} personality is {personality_desc}."
         )
 
         return desc
@@ -290,6 +302,7 @@ def generate_user_background(seed: Optional[int] = None, use_llm: bool = True) -
 
     return {
         "age": profile.age,
+        "gender": profile.gender,
         "country": profile.country,
         "occupation": profile.occupation,
         "personality": profile.personality,
@@ -341,12 +354,13 @@ def generate_and_save_csv(
     with open(output_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         # Header
-        writer.writerow(["id", "age", "country", "occupation", "personality", "education_level", "background_description"])
+        writer.writerow(["id", "age", "gender", "country", "occupation", "personality", "education_level", "background_description"])
         # Data
         for i, profile in enumerate(profiles):
             writer.writerow([
                 i + 1,
                 profile.age,
+                profile.gender,
                 profile.country,
                 profile.occupation,
                 profile.personality,
@@ -384,6 +398,7 @@ if __name__ == "__main__":
             profile = generator.generate()
             print(f"\nProfile {i+1}:")
             print(f"  Age: {profile.age}")
+            print(f"  Gender: {profile.gender}")
             print(f"  Country: {profile.country}")
             print(f"  Occupation: {profile.occupation}")
             print(f"  Personality: {profile.personality}")
