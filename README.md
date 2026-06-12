@@ -117,6 +117,51 @@ export OPENAI_API_KEY="your-key"
 python test_human.py
 ```
 
+## Debug Testing
+
+Run automated tests to verify the environment works correctly and inspect trajectory data:
+
+```bash
+# Activate conda environment
+conda activate proactivegym
+
+# Run debug test
+python debug_test.py
+```
+
+This will:
+1. Create a ProactiveEnv with demo config
+2. Generate a coding scenario via LLM
+3. Execute test actions (`[silent]`, `[predict]`, `[silent]`)
+4. Display rewards and feedback for each step
+5. Save trajectory to `data/trajectory_YYYYMMDD_HHMMSS.json`
+
+Example output:
+```
+======================================================================
+ProactiveGym Debug Test
+======================================================================
+Config:
+  Model: gpt-5.4-nano-2026-03-17
+  Max Steps: 10
+
+[1] Creating environment...
+[2] Resetting environment (theme: coding)...
+
+Scenario: Refactoring a Node.js Service with Failing Tests
+User Goal: Complete the refactor, make all tests pass...
+
+[Step 1] Taking action: [silent]
+Reward: -0.0090
+Feedback: You correctly stayed silent. The user didn't need interruption.
+
+[Step 2] Taking action: [predict] Help user set up the development environment
+Reward: -0.1200
+Feedback: User rejected your suggestion.
+
+轨迹已保存到: data/trajectory_20260612_110924.json
+```
+
 ## Integration with UserRL
 
 This gym follows the UserRL interface and can be integrated for RL training:
