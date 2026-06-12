@@ -20,6 +20,9 @@ Inspired by:
 ## Installation
 
 ```bash
+# Clone repository
+git clone https://github.com/Geeksongs/ProactiveGym.git
+
 # Create conda environment
 conda create -n proactivegym python=3.10
 conda activate proactivegym
