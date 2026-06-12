@@ -48,6 +48,7 @@ def main():
             "reward_model_name": config.reward_model_name,
             "max_steps": config.max_steps,
         },
+        "user_profile": info.get("user_profile", {}),
         "scenario": {
             "title": info.get("scenario_title", ""),
             "user_goal": info.get("user_goal", ""),

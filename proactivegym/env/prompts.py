@@ -16,18 +16,19 @@ from typing import Dict, Any, List
 # ============================================================================
 
 USER_SYSTEM_PROMPT = """<Role>
-You are tasked with simulating a user within a system. The content labeled `Source: user` reflects your past actions and decisions.
+You are tasked with simulating a specific user within a system. You must act according to this user's background, personality, and characteristics.
 </Role>
 
 <Task>
-Generate human-like activities with distinct characteristics and identities. You will receive events and observations from the environment; analyze these closely to decide your actions.
+Generate human-like activities with distinct characteristics based on your identity. You will receive events and observations from the environment; analyze these closely to decide your actions.
 </Task>
 
 <Rules>
-- Respond like a real user; don't be overly predictable.
-- Refer to # User Info to understand your identity.
+- Respond like this specific user would, based on their background and personality.
+- Your actions should reflect your education level, occupation, and personality type.
 - Critically evaluate the received information, as it may not always be accurate.
 - Stay aware of environmental changes, which can occur at any time.
+- Your working style and approach should match your personality.
 </Rules>"""
 
 
@@ -37,15 +38,16 @@ def build_user_activity_prompt(goal: str, user_info: str, recent_events: List[Di
 
     messages = [
         {"role": "system", "content": USER_SYSTEM_PROMPT},
-        {"role": "user", "content": f"# Goal\n{goal}\n\n# User Info\n{user_info}"},
+        {"role": "user", "content": f"# Goal\n{goal}\n\n# User Background\n{user_info}"},
         {"role": "user", "content": f"""# Recent Events
 {events_str}
 
-Now describe what's your next action to achieve the goal based on the environmental observation.
+Based on your background and personality, describe what's your next action to achieve the goal.
+Your action should reflect who you are as a person.
 
 Respond in JSON format:
 {{
-    "thought": "What you're thinking",
+    "thought": "What you're thinking (reflecting your personality)",
     "activity": "Your specific action",
     "is_finished": false
 }}"""}
@@ -212,15 +214,18 @@ SCENARIO_GENERATION_PROMPT = """Generate a realistic scenario for proactive agen
 
 Theme: {theme}
 
-Create a scenario where a user is working on a task and might benefit from proactive AI assistance at various points.
+User Background:
+{user_background}
+
+Based on this user's background, create a scenario where they are working on a task related to the theme and might benefit from proactive AI assistance at various points. The scenario should be realistic and consistent with the user's occupation, education, and personality.
 
 Respond in JSON format:
 {{
     "title": "Brief scenario title",
-    "description": "Detailed scenario description",
-    "user_goal": "What the user is trying to accomplish",
+    "description": "Detailed scenario description tailored to this specific user",
+    "user_goal": "What the user is trying to accomplish (specific to their background)",
     "user_profile": {{
-        "occupation": "...",
+        "occupation": "{occupation}",
         "expertise_level": "beginner/intermediate/expert",
         "working_style": "focused/multitasking/exploratory"
     }},
@@ -242,9 +247,22 @@ Respond in JSON format:
 }}"""
 
 
-def build_scenario_generation_prompt(theme: str) -> List[Dict]:
+def build_scenario_generation_prompt(theme: str, user_profile=None) -> List[Dict]:
     """Build prompt for generating a new scenario."""
+    if user_profile is not None:
+        user_background = user_profile.background_description
+        occupation = user_profile.occupation
+    else:
+        user_background = "A typical user working on tasks."
+        occupation = "Professional"
+
+    prompt = SCENARIO_GENERATION_PROMPT.format(
+        theme=theme,
+        user_background=user_background,
+        occupation=occupation
+    )
+
     messages = [
-        {"role": "user", "content": SCENARIO_GENERATION_PROMPT.format(theme=theme)}
+        {"role": "user", "content": prompt}
     ]
     return messages

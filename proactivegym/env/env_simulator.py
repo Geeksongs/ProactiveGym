@@ -89,7 +89,7 @@ class EnvironmentSimulator:
         self.events_history = []
         return self.current_scenario
 
-    def generate_scenario(self, theme: str) -> Scenario:
+    def generate_scenario(self, theme: str, user_profile=None) -> Scenario:
         """Generate a new scenario using LLM."""
         try:
             client = openai.OpenAI(
@@ -97,7 +97,7 @@ class EnvironmentSimulator:
                 base_url=self.model_config["base_url"]
             )
 
-            messages = build_scenario_generation_prompt(theme)
+            messages = build_scenario_generation_prompt(theme, user_profile)
 
             response = client.chat.completions.create(
                 model=self.model_config["model_name"],
@@ -115,7 +115,7 @@ class EnvironmentSimulator:
             print(f"[EnvironmentSimulator] Error generating scenario: {e}")
             return self._get_fallback_scenario(theme)
 
-    async def generate_scenario_async(self, theme: str) -> Scenario:
+    async def generate_scenario_async(self, theme: str, user_profile=None) -> Scenario:
         """Async version of generate_scenario."""
         try:
             client = openai.AsyncOpenAI(
@@ -123,7 +123,7 @@ class EnvironmentSimulator:
                 base_url=self.model_config["base_url"]
             )
 
-            messages = build_scenario_generation_prompt(theme)
+            messages = build_scenario_generation_prompt(theme, user_profile)
 
             response = await client.chat.completions.create(
                 model=self.model_config["model_name"],

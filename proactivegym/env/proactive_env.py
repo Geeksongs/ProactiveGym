@@ -30,6 +30,7 @@ import random
 from typing import Dict, Any, Tuple, List, Optional
 
 from ..config import ProactiveGymConfig, get_default_config
+from ..user_profile import UserProfileGenerator
 from .simulated_user import SimulatedUser
 from .env_simulator import EnvironmentSimulator
 
@@ -53,7 +54,9 @@ class ProactiveEnv(gym.Env):
 
         # Initialize components
         self.env_simulator = EnvironmentSimulator(self.config.get_model_config())
+        self.user_profile_generator = UserProfileGenerator(use_llm=True)
         self.simulated_user: Optional[SimulatedUser] = None
+        self.current_user_profile = None
 
         # State
         self.step_count = 0
@@ -103,15 +106,26 @@ class ProactiveEnv(gym.Env):
         options = options or {}
         theme = options.get("theme", random.choice(self.config.themes))
 
+        # Generate user profile first
+        self.current_user_profile = self.user_profile_generator.generate()
+
         if "scenario" in options:
             scenario = self.env_simulator.load_scenario(options["scenario"])
         else:
-            scenario = self.env_simulator.generate_scenario(theme)
+            scenario = self.env_simulator.generate_scenario(theme, self.current_user_profile)
 
-        # Initialize simulated user
+        # Initialize simulated user with generated profile
         self.simulated_user = SimulatedUser(
             goal=scenario.user_goal,
-            user_profile=scenario.user_profile,
+            user_profile={
+                "age": self.current_user_profile.age,
+                "gender": self.current_user_profile.gender,
+                "country": self.current_user_profile.country,
+                "occupation": self.current_user_profile.occupation,
+                "personality": self.current_user_profile.personality,
+                "education_level": self.current_user_profile.education_level,
+                "background": self.current_user_profile.background_description,
+            },
             model_config=self.config.get_model_config(),
             reward_model_config=self.config.get_reward_model_config()
         )
@@ -132,11 +146,21 @@ class ProactiveEnv(gym.Env):
             "scenario_title": scenario.title,
             "theme": scenario.theme,
             "user_goal": scenario.user_goal,
+            "user_profile": {
+                "age": self.current_user_profile.age,
+                "gender": self.current_user_profile.gender,
+                "country": self.current_user_profile.country,
+                "occupation": self.current_user_profile.occupation,
+                "personality": self.current_user_profile.personality,
+                "education_level": self.current_user_profile.education_level,
+                "background": self.current_user_profile.background_description,
+            },
             "initial_events": initial_events,
         }
 
         if self.config.verbose:
             print(f"[ProactiveGym] New episode: {scenario.title}")
+            print(f"[ProactiveGym] User: {self.current_user_profile.age}y {self.current_user_profile.gender} {self.current_user_profile.occupation} from {self.current_user_profile.country}")
             print(f"[ProactiveGym] User goal: {scenario.user_goal}")
 
         return observation, info

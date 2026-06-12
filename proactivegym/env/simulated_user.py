@@ -71,10 +71,24 @@ class SimulatedUser:
 
     def _build_user_info(self) -> str:
         """Build user info string from profile."""
-        lines = []
-        for key, value in self.user_profile.items():
-            lines.append(f"- {key}: {value}")
-        return "\n".join(lines)
+        # If we have a detailed background, use it
+        if "background" in self.user_profile:
+            info = self.user_profile["background"]
+            # Add additional structured info
+            extra = []
+            if "personality" in self.user_profile:
+                extra.append(f"Personality type: {self.user_profile['personality']}")
+            if "education_level" in self.user_profile:
+                extra.append(f"Education: {self.user_profile['education_level']}")
+            if extra:
+                info += "\n" + "\n".join(extra)
+            return info
+        else:
+            # Fallback to simple key-value format
+            lines = []
+            for key, value in self.user_profile.items():
+                lines.append(f"- {key}: {value}")
+            return "\n".join(lines)
 
     def generate_activity(self, recent_events: List[Dict]) -> UserActivity:
         """

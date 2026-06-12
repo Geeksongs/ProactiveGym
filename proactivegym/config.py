@@ -37,7 +37,7 @@ class ProactiveGymConfig:
     reject_reward: float = -0.1      # Agent predicts, user rejects (false alarm)
     correct_silence_reward: float = 0.001   # Agent silent, user didn't need help
     missed_opportunity_reward: float = -0.3  # Agent silent, user needed help
-    step_penalty: float = 0.01
+    step_penalty: float = 0.0
     normalize_rewards: bool = False
 
     # Data configuration
@@ -101,7 +101,7 @@ def get_demo_config() -> ProactiveGymConfig:
         verbose=True,
         max_steps=10,
         max_events_per_step=3,
-        step_penalty=0.01,
+        step_penalty=0.0,
     )
 
 
@@ -112,5 +112,5 @@ def get_training_config() -> ProactiveGymConfig:
         max_steps=150,
         max_events_per_step=5,
         normalize_rewards=False,
-        step_penalty=0.005,
+        step_penalty=0.0,
     )
